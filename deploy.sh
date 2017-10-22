@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
-BootStrap=YES
-
+Bootstrap=NO
 
 function decompress {
 echo -e "\e[95mDecompress boost...\e[0m"
@@ -114,9 +113,11 @@ sleep 5
 fi
 echo ""
 Ok_build
+killall -9 okcashd || true
+sudo cp okcashd /usr/local/bin/
 echo -e "\e[97mBuild is finished !!!\e[0m"
 
-if [ $BootStrap = "YES" ]
+if [ $Bootstrap = "YES" ]
 then
 cd /home/pi
 wget -c http://farman-aeromodelisme.fr/hors_site/bootstrap.tar.bz2
