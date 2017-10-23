@@ -1,4 +1,5 @@
 ![](https://raw.githubusercontent.com/wareck/okcash_build/master/.docs/logo.png)
-# okcash_build
-cgminer-scrypt-mod2
+Okcash build for Raspberry Pi
 ==============
+
+This script if for build an headless daemon for OKcash (okcashd)
