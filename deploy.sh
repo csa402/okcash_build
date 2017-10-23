@@ -95,8 +95,9 @@ function Ok_build {
 echo -e "\e[95mBuild OkCash\e[0m"
 cd okcash
 cd src
-make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/bin/openssl-1.0.2l OPENSSL_INCLUDE_PATH=/home/pi/bin/openssl-1.0.2l/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/
+make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/bin/openssl-1.0.2l OPENSSL_INCLUDE_PATH=/home/pi/bin/openssl-1.0.2l/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ 
 #strip okcashd
+sudo cp okcashd /usr/local/bin
 echo
 }
 
@@ -117,7 +118,6 @@ echo ""
 sudo ldconfig
 Ok_build
 killall -9 okcashd || true
-sudo cp okcashd /usr/local/bin/
 
 if [ $Bootstrap = "YES" ]
 then
@@ -128,5 +128,5 @@ wget -c http://farman-aeromodelisme.fr/hors_site/bootstrap.tar.bz2
 tar xvfj bootstrap.tar.bz2
 fi
 
-echo -e "\e[97mBuild is finished !!!\e[0m"
+echo -e "\n\e[97mBuild is finished !!!\e[0m"
 
