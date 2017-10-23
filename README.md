@@ -1,3 +1,3 @@
 # okcash_build
 
-![](https://raw.githubusercontent.com/wareck/cgminer-lketc/master/docs/lketc.jpg)
+![](https://raw.githubusercontent.com/wareck/okcash_build/blob/master/.docs/logo.png)
