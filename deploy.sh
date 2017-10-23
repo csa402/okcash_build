@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 Bootstrap=NO
+Version=1.2
 
 function decompress {
 echo -e "\e[95mDecompress boost...\e[0m"
@@ -9,7 +10,8 @@ then
 wget -c http://farman-aeromodelisme.fr/hors_site/okcash/boost_1_58_0.tar.gz
 tar xvfz boost_1_58_0.tar.gz
 fi
-sudo apt-get install libbz2-dev liblzma-dev libzip-dev zlib1g-dev -y
+sudo apt-get update
+sudo apt-get install libbz2-dev liblzma-dev libzip-dev zlib1g-dev python-dev -y
 echo
 
 echo -e "\e[95mDecompress openssl...\e[0m"
@@ -98,7 +100,7 @@ make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/bin/openssl-1.0.2l OPENSSL_INCLU
 echo
 }
 
-echo -e "\e[97mOkcash headless builder version 1.1\e[0m"
+echo -e "\n\e[97mOkcash headless builder version $Version\e[0m"
 echo ""
 if ! [ -f .pass1 ]
 then
@@ -107,7 +109,7 @@ echo ""
 decompress
 deps
 else
-echo "Dependencies are already builded..."
+echo "Dependencies were already builded..."
 echo "Remove .pass1 to restart their build..."
 sleep 5
 fi
@@ -115,11 +117,15 @@ echo ""
 Ok_build
 killall -9 okcashd || true
 sudo cp okcashd /usr/local/bin/
-echo -e "\e[97mBuild is finished !!!\e[0m"
 
 if [ $Bootstrap = "YES" ]
 then
+echo ""
+echo -e "\e[95mRecover Bootstrap.dat :\e[0m"
 cd /home/pi
 wget -c http://farman-aeromodelisme.fr/hors_site/bootstrap.tar.bz2
 tar xvfj bootstrap.tar.bz2
 fi
+
+echo -e "\e[97mBuild is finished !!!\e[0m"
+
