@@ -114,6 +114,7 @@ echo "Remove .pass1 to restart their build..."
 sleep 5
 fi
 echo ""
+sudo ldconfig
 Ok_build
 killall -9 okcashd || true
 sudo cp okcashd /usr/local/bin/
