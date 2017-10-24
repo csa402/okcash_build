@@ -122,7 +122,6 @@ port=6970
 datadir=/home/pi/.okcash
 
 #Add extra Nodes
-addnode=192.168.1.11
 addnode=180.34.138.133
 addnode=150.249.117.19
 addonde=99.227.239.19.229
