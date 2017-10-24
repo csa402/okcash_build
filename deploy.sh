@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
-
 Version=1.2
-CleanAfterInstall=YES
-Bootstrap=NO
-DefaultConf=YES
+
+##Configuration
+CleanAfterInstall=YES # YES or NO => remove tarballs after install (keep space)
+Bootstrap=NO # YES or NO => download bootstrap.dat (take long time to start, but better)
+DefaultConf=YES # YES or NO => install standard 
 
 function decompress {
 sudo apt-get update
