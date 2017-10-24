@@ -8,7 +8,8 @@ DefaultConf=YES
 
 function decompress {
 sudo apt-get update
-sudo apt-get install libbz2-dev liblzma-dev libzip-dev zlib1g-dev python-dev -y
+sudo apt-get install libbz2-dev liblzma-dev libzip-dev zlib1g-dev python-dev ntp -y
+sudo sed -i -e "s/# set const/set const/g" /etc/nanorc
 echo -e "\e[95mDecompress boost...\e[0m"
 if ! [ -d /home/pi/bin/boost_1_58_0 ]
 then
