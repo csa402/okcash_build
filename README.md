@@ -57,8 +57,34 @@ Launch scrypt :
 	cd /home/pi
 	git clone https://github.com/wareck/okcash_build.git bin
 	cd /home/pi/bin
-	
-It will take 2 or 3 hours to build okcashd.
-Then you'll have to edit the /home/pi/.okcash/okcash.conf file
 
-work in progress...
+now edit options :
+
+    nano deploy.sh
+*## Configuration ##*    
+*CleanAfterInstall=YES # YES or NO => remove tarballs after install (keep space)*
+*Bootstrap=NO # YES or NO => download bootstrap.dat (take long time to start, but better)*
+*DefaultConf=YES # YES or NO => install standard*
+
+Save
+
+Start build:
+
+    ./deploy.sh
+	
+**It will take 2 or 3 hours to build okcashd.**
+
+## Check after build ##
+You can check if everithing is ok by use this command:
+
+    okcashd --printtoconsole
+If you can see this king of screen, okcashd is running ...
+(photo) 
+
+## Auto Start at boot ##
+To add okcashd running at raspbbery startup :
+
+    sudo echo "@reboot pi okcashd" >>/etc/crontab
+
+
+Wareck
