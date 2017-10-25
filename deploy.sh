@@ -175,7 +175,7 @@ echo -e "\n\e[95mCleaning :\e[0m"
 cd /home/pi/bin
 rm boost_1_58_0.tar.gz || true
 rm openssl-1.0.2l.tar.gz ||true
-rm miniupnpc-1.9.20140401.tar.gz || true
+rm miniupnpc-2.0.20170509.tar.gz || true
 rm db-4.8.30.NC.tar.gz || true
 echo "Done !!!"
 fi
