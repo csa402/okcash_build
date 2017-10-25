@@ -5,7 +5,7 @@ Version=1.2
 ##Configuration
 CleanAfterInstall=YES # YES or NO => remove tarballs after install (keep space)
 Bootstrap=NO # YES or NO => download bootstrap.dat (take long time to start, but better)
-DefaultConf=YES # YES or NO => install standard 
+DefaultConf=YES # YES or NO => install standard
 
 function decompress {
 sudo apt-get update
@@ -26,10 +26,10 @@ tar xvfz openssl-1.0.2l.tar.gz
 fi
 
 echo -e "\e[95mDecompress miniupnpc...\e[0m"
-if ! [ -d /home/pi/bin/miniupnpc-1.9.20140401 ]
+if ! [ -d /home/pi/bin/miniupnpc-2.0.20170509 ]
 then
-wget -c http://farman-aeromodelisme.fr/hors_site/okcash/miniupnpc-1.9.20140401.tar.gz
-tar xvfz miniupnpc-1.9.20140401.tar.gz
+wget -c http://farman-aeromodelisme.fr/hors_site/okcash/miniupnpc-2.0.20170509.tar.gz
+tar xvfz miniupnpc-2.0.20170509.tar.gz
 fi
 
 echo -e "\e[95mDecompress db-4.8.30...\e[0m"
@@ -61,7 +61,7 @@ make
 cd ..
 
 echo -e "\e[95mBuild DB-4.8.30\e[0m"
-if [ -f /usr/share/man/man3/miniupnpc.3.gz ]; then rm /usr/share/man/man3/miniupnpc.3.gz; fi
+if [ -f /usr/share/man/man3/miniupnpc.3.gz ]; then sudo rm /usr/share/man/man3/miniupnpc.3.gz; fi
 cd db-4.8.30.NC
 cd build_unix
 ../dist/configure --enable-cxx --disable-shared --disable-replication
@@ -76,8 +76,8 @@ cd boost_1_58_0
 sudo ./b2 --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc variant=release link=static threading=multi runtime-link=static install
 cd ..
 
-echo -e "\e[95mBuild miniupnpc 1.9\e[0m"
-cd miniupnpc-1.9.20140401
+echo -e "\e[95mBuild miniupnpc 2.0\e[0m"
+cd miniupnpc-2.0.20170509
 make
 sudo make install
 cd ..
@@ -94,7 +94,7 @@ function Ok_build {
 echo -e "\e[95mBuild OkCash\e[0m"
 cd okcash
 cd src
-make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/bin/openssl-1.0.2l OPENSSL_INCLUDE_PATH=/home/pi/bin/openssl-1.0.2l/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ 
+make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/bin/openssl-1.0.2l OPENSSL_INCLUDE_PATH=/home/pi/bin/openssl-1.0.2l/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ MINIUPNPC_INCLUDE_PATH=/usr/include/miniupnpc MINIUPNPC_LIB_PATH=/usr/lib/
 #strip okcashd
 sudo cp okcashd /usr/local/bin
 }
