@@ -12,41 +12,41 @@ sudo apt-get update
 sudo apt-get install libbz2-dev liblzma-dev libzip-dev zlib1g-dev python-dev ntp -y
 sudo sed -i -e "s/# set const/set const/g" /etc/nanorc
 echo -e "\e[95mDecompress boost...\e[0m"
-if ! [ -d /home/pi/bin/boost_1_58_0 ]
+if ! [ -d /home/pi//okcash_build/boost_1_65_1 ]
 then
-wget -c http://farman-aeromodelisme.fr/hors_site/okcash/boost_1_58_0.tar.gz
-tar xvfz boost_1_58_0.tar.gz
+wget -c http://farman-aeromodelisme.fr/hors_site/okcash/boost_1_65_1.tar.gz
+tar xvfj boost_1_65_1.tar.bz2
 fi
 
 echo -e "\e[95mDecompress openssl...\e[0m"
-if ! [ -d /home/pi/bin/openssl-1.0.2l ]
+if ! [ -d /home/pi//okcash_build/openssl-1.0.2l ]
 then
 wget -c http://farman-aeromodelisme.fr/hors_site/okcash/openssl-1.0.2l.tar.gz
 tar xvfz openssl-1.0.2l.tar.gz
 fi
 
 echo -e "\e[95mDecompress miniupnpc...\e[0m"
-if ! [ -d /home/pi/bin/miniupnpc-2.0.20170509 ]
+if ! [ -d /home/pi//okcash_build/miniupnpc-2.0.20170509 ]
 then
 wget -c http://farman-aeromodelisme.fr/hors_site/okcash/miniupnpc-2.0.20170509.tar.gz
 tar xvfz miniupnpc-2.0.20170509.tar.gz
 fi
 
 echo -e "\e[95mDecompress db-4.8.30...\e[0m"
-if ! [ -d /home/pi/bin/db-4.8.30.NC ]
+if ! [ -d /home/pi/okcash_build/db-4.8.30.NC ]
 then
 wget -c http://farman-aeromodelisme.fr/hors_site/okcash/db-4.8.30.NC.tar.gz
 tar xvfz db-4.8.30.NC.tar.gz
 fi
 
 echo -e "\e[95mDecompress okcash...\e[0m"
-if ! [ -d /home/pi/bin/okcash ]
+if ! [ -d /home/pi/okcash_build/okcash ]
 then
 git clone https://github.com/okcashpro/okcash.git || true
 else
-cd /home/pi/bin/okcash
+cd /home/pi/okcash_build/okcash
 git pull
-cd /home/pi/bin
+cd /home/pi/okcash_build
 fi
 
 }
@@ -70,8 +70,8 @@ sudo make install
 cd ..
 cd ..
 
-echo -e "\e[95mBuild Boost 1_58_0\e[0m"
-cd boost_1_58_0
+echo -e "\e[95mBuild Boost 1_65_1\e[0m"
+cd boost_1_65_1
 ./bootstrap.sh
 sudo ./b2 --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc variant=release link=static threading=multi runtime-link=static install
 cd ..
@@ -94,7 +94,7 @@ function Ok_build {
 echo -e "\e[95mBuild OkCash\e[0m"
 cd okcash
 cd src
-make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/bin/openssl-1.0.2l OPENSSL_INCLUDE_PATH=/home/pi/bin/openssl-1.0.2l/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ MINIUPNPC_INCLUDE_PATH=/usr/include/miniupnpc MINIUPNPC_LIB_PATH=/usr/lib/
+make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/okcash_build/openssl-1.0.2l OPENSSL_INCLUDE_PATH=/home/pi/okcash_build/openssl-1.0.2l/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ MINIUPNPC_INCLUDE_PATH=/usr/include/miniupnpc MINIUPNPC_LIB_PATH=/usr/lib/
 #strip okcashd
 sudo cp okcashd /usr/local/bin
 }
@@ -161,7 +161,7 @@ if [ $Bootstrap = "YES" ]
 then
 echo -e "\e[95mRecover Bootstrap.dat :\e[0m"
 cd /home/pi
-wget -c http://farman-aeromodelisme.fr/hors_site/bootstrap.tar.bz2
+wget -c http://farman-aeromodelisme.fr/hors_site/okcash/bootstrap.tar.bz2
 tar xvfj bootstrap.tar.bz2
 sleep 1
 rm /home/pi/bootstrap.tar.bz2
@@ -172,8 +172,8 @@ if [ $DefaultConf = "YES" ]; then conf_ ; fi
 if [ $CleanAfterInstall = "YES" ]
 then
 echo -e "\n\e[95mCleaning :\e[0m"
-cd /home/pi/bin
-rm boost_1_58_0.tar.gz || true
+cd /home/pi/okcash_build
+rm boost_1_65_1.tar.bz2 || true
 rm openssl-1.0.2l.tar.gz ||true
 rm miniupnpc-2.0.20170509.tar.gz || true
 rm db-4.8.30.NC.tar.gz || true
