@@ -5,13 +5,12 @@
 #Openssl 1.0.2g
 #DB 4.8
 #OkCash 4.0.0.4g
-
 set -e
-Version=1.2
+Version=1.3f
 
 ##Configuration
 CleanAfterInstall=YES # YES or NO => remove tarballs after install (keep space)
-Bootstrap=NO # YES or NO => download bootstrap.dat (take long time to start, but better)
+Bootstrap=YES # YES or NO => download bootstrap.dat (take long time to start, but better)
 DefaultConf=YES # YES or NO => install standard
 
 function decompress {
@@ -55,7 +54,7 @@ git checkout 4d47b31ff318627bdb48fb4a9b0b384b9ebd2a09
 cd ..
 else
 cd /home/pi/okcash_build/okcash
-git pull
+#git pull
 cd /home/pi/okcash_build
 fi
 
@@ -74,9 +73,10 @@ echo -e "\e[95mBuild DB-4.8.30\e[0m"
 if [ -f /usr/share/man/man3/miniupnpc.3.gz ]; then sudo rm /usr/share/man/man3/miniupnpc.3.gz; fi
 cd db-4.8.30.NC
 cd build_unix
-../dist/configure --enable-cxx --disable-shared --disable-replication
+../dist/configure --enable-cxx
 make
 sudo make install
+sudo ln -s /usr/local/BerkeleyDB.4.8/lib/libdb_cxx-4.8.so /usr/lib/ || true
 cd ..
 cd ..
 
@@ -104,7 +104,7 @@ function Ok_build {
 echo -e "\e[95mBuild OkCash\e[0m"
 cd okcash
 cd src
-make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/okcash_build/openssl-1.0.2g OPENSSL_INCLUDE_PATH=/home/pi/okcash_build/openssl-1.0.2g/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ MINIUPNPC_INCLUDE_PATH=/usr/include/miniupnpc MINIUPNPC_LIB_PATH=/usr/lib/
+make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/okcash_build/openssl-1.0.2g OPENSSL_INCLUDE_PATH=/home/pi/okcash_build/openssl-1.0.2g/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ #MINIUPNPC_INCLUDE_PATH=/usr/include/miniupnpc MINIUPNPC_LIB_PATH=/usr/lib/ USE_UPNP=1
 #strip okcashd
 sudo cp okcashd /usr/local/bin
 }
@@ -120,13 +120,13 @@ listen=1
 staking=1
 
 #Connection User and Password
-rpcuser=MyUseName
-rpcpassword=MyPassword
+rpcuser=wareck51
+rpcpassword=zorn69
 
 #Authorized IPs
 rpcallowip=127.0.0.1
-rpcport=6969
-port=6970
+rpcport=16969
+port=16970
 
 #write the location for this blockchain below if not on standard directory
 datadir=/home/pi/.okcash
@@ -135,7 +135,8 @@ datadir=/home/pi/.okcash
 addnode=180.34.138.133
 addnode=150.249.117.19
 addonde=99.227.239.19.229
-
+addnode=192.168.1.11
+addnode=192.168.1.100
 EOF
 fi
 echo "Done !"
