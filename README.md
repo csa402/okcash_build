@@ -59,9 +59,13 @@ now you can edit options :
 
 *Bootstrap=NO # YES or NO => download bootstrap.dat (take long time to start, but better)*
 
-*DefaultConf=YES # YES or NO => install standard*
+*DelFolders=NO # YES or NO => delete build files after finish (keep space on sdcard)*
 
-Save (crtl+x then y)
+*PatchCheckPoints=YES # YES or NO => this put new checkpoint to allow okcash sync faster at first start*
+
+*Raspi_optimize=YES # YES or NO => install watchdog, autostart , swap and new kernel for speedup a little / better work*
+
+**Save (crtl+x then y)**
 
 Start build:
 
@@ -76,4 +80,6 @@ You can check if everithing is ok by use this command:
 If you can see this king of screen, okcashd is running ...
 (photo) 
 
-Wareck
+wareck@gmail.com
+donate Bitcoin :  16F8V2EnHCNPVQwTGLifGHCE12XTnWPG8G
+donate Okcash  :  P9q7UeQVgAk9QKJz5v76FZ9xPWmE56Leu8
