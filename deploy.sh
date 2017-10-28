@@ -1,29 +1,35 @@
 #!/bin/bash
-#Working version, sync enable, staking enable
-#Best results was
-#Boost 1.58
-#Openssl 1.0.2g
-#DB 4.8
-#OkCash 4.0.0.4g
+#Okcash headless 4.0.0.4g RPI Working (sync enable, staking enable)
+#Best results found was : Boost 1.58 / Openssl 1.0.2g / DB 4.8-30 / OkCash 4.0.0.4g
 set -e
 Version=1.4g
 
-##Configuration
+################
+##Configuration#
+################
+
+#Remove tarball at end of install (keep some space on card)
 CleanAfterInstall=YES # YES or NO => remove tarballs after install (keep space)
-Bootstrap=NO # YES or NO => download bootstrap.dat (take long time to start, but better)
-DefaultConf=YES # YES or NO => install standard
-DelFolders=YES
+
+#Bootstrap (speedup first start, but requier 2GB free space on sdcard)
+Bootstrap=YES # YES or NO => download bootstrap.dat (take long time to start, but better)
+
+#Delete folder after compile/install (keep free space)
+DelFolders=NO
+
+#Build okcash with Checkpoint patched (speedup the first start, don't check 1113700 first block)
 PatchCheckPoints=YES #speedup init (start check database at last checkpoint)
+
+#Optimiser Raspberry (give watchdog function and autostart okcash, speedup a little the raspberry)
 Raspi_optimize=YES
 
 echo -e "\n\e[97mOkcash headless builder version $Version\e[0m"
 echo -e "wareck@gmail.com"
 echo -e "\nConfiguration"
 echo -e "-------------"
-echo -e "Default okcach.conf file      : $DefaultConf"
 echo -e "Download Bootstrap.dat        : $Bootstrap"
-#echo -e "Delete tarballs after build   : $CleanAfterInstall"
-echo -e "Delete build directory at end : $DelFolders"
+echo -e "Delete tarballs after build   : $CleanAfterInstall"
+echo -e "Delete build directory        : $DelFolders"
 echo -e "Patching Checkpoints.cpp      : $PatchCheckPoints"
 echo -e "Raspberry Optimisation        : $Raspi_optimize"
 sleep 5
@@ -71,7 +77,7 @@ if [ $PatchCheckPoints = "YES" ]
 then
 echo -e "\n\e[97mPatching Checkpoints : \e[0m"
 patch -p1 < ../checkpoint.patch
-echo -e "Done !" 
+echo -e "Done !"
 sleep 5
 fi
 cd ..
@@ -126,7 +132,7 @@ cd okcash
 cd src
 make -f makefile.unix OPENSSL_LIB_PATH=/home/pi/okcash_build/openssl-1.0.2g OPENSSL_INCLUDE_PATH=/home/pi/okcash_build/openssl-1.0.2g/include BDB_INCLUDE_PATH=/usr/local/BerkeleyDB.4.8/include/ BDB_LIB_PATH=/usr/local/BerkeleyDB.4.8/lib BOOST_LIB_PATH=/usr/local/lib/ BOOST_INCLUDE_PATH=/usr/local/include/boost/ #MINIUPNPC_INCLUDE_PATH=/usr/include/miniupnpc MINIUPNPC_LIB_PATH=/usr/lib/ USE_UPNP=1
 strip okcashd
-sudo cp okcashd /usr/local/bin
+sudo cp okcashd /usr/local/bin ||true
 }
 
 function conf_ {
@@ -178,7 +184,7 @@ echo
 sleep 5
 fi
 sudo ldconfig
-
+Build_Okcash_
 killall -9 okcashd || true
 
 if [ $Bootstrap = "YES" ]
@@ -191,7 +197,7 @@ sleep 1
 rm /home/pi/bootstrap.tar.bz2
 fi
 
-if [ $DefaultConf = "YES" ]; then conf_ ; fi
+conf_
 
 if [ $CleanAfterInstall = "YES" ]
 then
@@ -201,8 +207,24 @@ rm boost_1_58_0.tar.gz || true
 rm openssl-1.0.2g.tar.gz ||true
 rm miniupnpc-2.0.20170509.tar.gz || true
 rm db-4.8.30.NC.tar.gz || true
-echo "Done !!!"
 fi
+if [ $DelFolders="YES" ]
+then
+echo -e "Remove openssl-1.0.2g"
+sudo rm -r -f openssl-1.0.2g  || true
+echo -e "Remove miniupnpc-2.0.20170509"
+sudo rm -r -f miniupnpc-2.0.20170509 || true
+echo -e "Remove db-4.8.30.NC"
+sudo rm -r -f db-4.8.30.NC || true
+echo -e "Remove boost_1_58_0"
+sudo rm -r -f boost_1_58_0 || true
+echo -e "Remove Okcash Folder"
+sudo rm -r -f okcash ||true
+rm .pass1 || true
+fi
+
+echo "Done !!!"
+
 
 if [ $Raspi_optimize = "YES" ]
 then
@@ -277,5 +299,8 @@ echo -e "\n\e[92mRaspberry optimized, need to reboot .\e[0m"
 fi
 
 echo -e "\n\e[97mBuild is finished !!!\e[0m"
-sleep 3
+echo ""
+echo "wareck@gmail.com"
+echo "Donate Bitcoin : 16F8V2EnHCNPVQwTGLifGHCE12XTnWPG8G || OKcash : P9q7UeQVgAk9QKJz5v76FZ9xPWmE56Leu8"
 
+sleep 3
