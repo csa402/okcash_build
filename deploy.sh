@@ -42,29 +42,29 @@ sudo sed -i -e "s/# set const/set const/g" /etc/nanorc
 echo -e "\n\e[95mDownload and expand boost library :\e[0m"
 if ! [ -d /home/pi/okcash_build/boost_1_58_0 ]
 then
-wget -c http://wareck.free.fr/okcash/boost_1_58_0.tar.gz
-tar xvfz boost_1_58_0.tar.gz
+wget -c http://wareck.free.fr/okcash/boost_1_58_0.tar.xz
+tar xvfJ boost_1_58_0.tar.xz
 fi
 
 echo -e "\n\e[95mDownload and expand openssl library:\e[0m"
 if ! [ -d /home/pi/okcash_build/openssl-1.0.2g ]
 then
-wget -c http://wareck.free.fr/okcash/openssl-1.0.2g.tar.gz
-tar xvfz openssl-1.0.2g.tar.gz
+wget -c http://wareck.free.fr/okcash/openssl-1.0.2g.tar.xz
+tar xvfJ openssl-1.0.2g.tar.xz
 fi
 
 echo -e "\n\e[95mDonwload and expand miniupnpc library:\e[0m"
 if ! [ -d /home/pi/okcash_build/miniupnpc-2.0.20170509 ]
 then
-wget -c http://wareck.free.fr/okcash/miniupnpc-2.0.20170509.tar.gz
-tar xvfz miniupnpc-2.0.20170509.tar.gz
+wget -c http://wareck.free.fr/okcash/miniupnpc-2.0.20170509.tar.xz
+tar xvfJ miniupnpc-2.0.20170509.tar.xz
 fi
 
 echo -e "\n\e[95mDownload and Expand db-4.8.30 library\e[0m"
 if ! [ -d /home/pi/okcash_build/db-4.8.30.NC ]
 then
-wget -c http://wareck.free.fr/okcash/db-4.8.30.NC.tar.gz
-tar xvfz db-4.8.30.NC.tar.gz
+wget -c http://wareck.free.fr/okcash/db-4.8.30.NC.tar.xz
+tar xvfJ db-4.8.30.NC.tar.xz
 fi
 
 echo -e "\n\e[95mDownload OkCash V4.0.0.4g\e[0m"
@@ -203,10 +203,10 @@ if [ $CleanAfterInstall = "YES" ]
 then
 echo -e "\n\e[95mCleaning :\e[0m"
 cd /home/pi/okcash_build
-rm boost_1_58_0.tar.gz || true
-rm openssl-1.0.2g.tar.gz ||true
-rm miniupnpc-2.0.20170509.tar.gz || true
-rm db-4.8.30.NC.tar.gz || true
+rm boost_1_58_0.tar.xz || true
+rm openssl-1.0.2g.tar.xz ||true
+rm miniupnpc-2.0.20170509.tar.xz || true
+rm db-4.8.30.NC.tar.xz || true
 fi
 if [ $DelFolders="YES" ]
 then
