@@ -80,6 +80,6 @@ You can check if everithing is ok by use this command:
 If you can see this king of screen, okcashd is running ...
 (photo) 
 
-wareck@gmail.com
+wareck : wareck@gmail.com
 donate Bitcoin :  16F8V2EnHCNPVQwTGLifGHCE12XTnWPG8G
 donate Okcash  :  P9q7UeQVgAk9QKJz5v76FZ9xPWmE56Leu8
