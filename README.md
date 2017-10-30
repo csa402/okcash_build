@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/wareck/okcash_build/master/.docs/logo.png)
 
-##Build script for Okcash daemon (Raspberry Pi2 & Pi3 & Zero) ##
+## Build script for Okcash daemon (Raspberry Pi2 & Pi3 & Zero) ##
 
 ----------
 This script build Okcash headless daemon (okcashd) .
