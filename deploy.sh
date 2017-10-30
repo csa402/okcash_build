@@ -191,10 +191,10 @@ if [ $Bootstrap = "YES" ]
 then
 echo -e "\n\e[95mDownload Bootstrap.dat :\e[0m"
 cd /home/pi
-wget -c http://farman-aeromodelisme.fr/hors_site/okcash/bootstrap.tar.bz2
-tar xvfj bootstrap.tar.bz2
+wget -c http://wareck.free.fr/okcash/bootstrap.tar.xz
+tar xvfJ bootstrap.tar.xz
 sleep 1
-rm /home/pi/bootstrap.tar.bz2
+rm /home/pi/bootstrap.tar.xz
 fi
 
 conf_
