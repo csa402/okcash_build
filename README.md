@@ -19,12 +19,12 @@ You can use Raspbian Jessie or Strecth (lite or full, better is to use lite vers
 
 Donwload **Raspbian Stretch** or **Raspbian Jessie** from https://www.raspberrypi.org/
 
-**If you planned to use a hudge sdcard (minimum 16GB) , just burn image on sdcard and jump to step 3.**
+***If you planned to use a hudge sdcard (minimum 16GB) , just burn image on sdcard and jump to step 3.***
 
-**If you planned to use a standard sdcard + usb key:**
+**If you planned to use a standard sdcard + usb key: (best) do all step...**
 
 
-Plug the sdcard in your raspberry and start it.
+Step 1 : ***Burn your card and plug it in your raspberry , start it.***
 
 When logged into Raspberry start by an update upgrade :
 
@@ -41,7 +41,24 @@ Then add essentials tools for starting :
 
 ( hostname, password , timezone ) 
 
-reboot and loggin again
+Step 2 : ***If you wants to use an USB key*** 
+
+plug you key in your raspberry pi now, (must be formated in VFAT or EXT4), let in plugged during build/installation
+
+Now prepare you raspberry to use usb instead of sdcard forlder:
+
+    mkdir /home/pi/.okcash
+	sudo nano /etc/fstab
+
+add this line to fstab (**for vfat**)
+
+    /dev/sda1 /home/pi/.okcash  vfat uid=pi,gid=pi,umask=0022,sync,auto,nosuid,rw,nouser    0    0
+
+add this line to fstab (**for ext4**)
+
+    /dev/sda1       /home/pi/.okcash        ext4 defaults 0 0
+
+Step 3 : ***reboot and login again***
 
     sudo reboot
 
