@@ -9,7 +9,7 @@ Version=1.4g
 ################
 
 #Remove tarball at end of install (keep some space on card)
-CleanAfterInstall=YES # YES or NO => remove tarballs after install (keep space)
+CleanAfterInstall=NO # YES or NO => remove tarballs after install (keep space)
 
 #Bootstrap (speedup first start, but requier 2GB free space on sdcard)
 Bootstrap=YES # YES or NO => download bootstrap.dat (take long time to start, but better)
