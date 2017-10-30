@@ -1,9 +1,9 @@
 ![](https://raw.githubusercontent.com/wareck/okcash_build/master/.docs/logo.png)
 
-## Build script for Okcash daemon (Raspberry Pi2 & Pi3 & Zero) ##
+## Build script for Okcash daemon (Raspberry Pi2 & Pi3) ##
 
 ----------
-This script build Okcash headless daemon (okcashd) .
+This script build "Okcash headless daemon" (okcashd command line only, for best efficiency) .
 
 It will make okcashd with static libraries (build from scratch) for a better compatibility/efficiency.
 
@@ -17,7 +17,12 @@ You can use Raspbian Jessie or Strecth (lite or full, better is to use lite vers
 ----------
 ## Raspberry pre-build ##
 
-Donwload **Raspbian Stretch** or **Raspbian Jessie** and burn it on your sdcard
+Donwload **Raspbian Stretch** or **Raspbian Jessie** from https://www.raspberrypi.org/
+
+**If you planned to use a hudge sdcard (minimum 16GB) , just burn image on sdcard and jump to step 3.**
+
+**If you planned to use a standard sdcard + usb key:**
+
 
 Plug the sdcard in your raspberry and start it.
 
