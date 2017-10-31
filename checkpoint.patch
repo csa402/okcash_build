@@ -23,7 +23,16 @@ index adb2c76..a9eab40 100644
  using namespace std;
 
 -static const int MAX_OUTBOUND_CONNECTIONS = 16;
-+static const int MAX_OUTBOUND_CONNECTIONS = 25;
++static const int MAX_OUTBOUND_CONNECTIONS = 20;
 
  bool OpenNetworkConnection(const CAddress& addrConnect, CSemaphoreGrant *grantOutbound = NULL, const char *strDest = NULL, bool fOneShot = false);
+@@ -1478,7 +1478,8 @@ void ThreadOpenAddedConnections()
+             OpenNetworkConnection(CAddress(vserv[i % vserv.size()]), &grant);
+             MilliSleep(500);
+         };
+-        MilliSleep(120000); // Retry every 2 minutes
++        //MilliSleep(120000); // Retry every 2 minutes
++          MilliSleep(80000); // Retry each minutes
+     };
+ }
 
