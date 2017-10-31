@@ -1,5 +1,5 @@
 diff --git a/src/checkpoints.cpp b/src/checkpoints.cpp
-index ce548fca..ba159b1a 100644
+index ce548fc..ba159b1 100644
 --- a/src/checkpoints.cpp
 +++ b/src/checkpoints.cpp
 @@ -44,8 +44,11 @@ namespace Checkpoints
@@ -9,8 +9,21 @@ index ce548fca..ba159b1a 100644
 +        ( 1230333,   uint256("0xeba330f3efa967bef8f9e6530577a3e030b2e442cc817dce5460eb1beb5e1b20") )
 +        ( 1330333,   uint256("0xf81d9e7013b95ea3be7d41674029dd6fe2c8f4abf6ecefb98c4a80ad01eeb5bc") )
      ;
- 
+
 +
      // TestNet has no checkpoints
      MapCheckpoints mapCheckpointsTestnet =
          boost::assign::map_list_of
+diff --git a/src/net.cpp b/src/net.cpp
+index adb2c76..a9eab40 100644
+--- a/src/net.cpp
++++ b/src/net.cpp
+@@ -27,7 +27,7 @@
+
+ using namespace std;
+
+-static const int MAX_OUTBOUND_CONNECTIONS = 16;
++static const int MAX_OUTBOUND_CONNECTIONS = 25;
+
+ bool OpenNetworkConnection(const CAddress& addrConnect, CSemaphoreGrant *grantOutbound = NULL, const char *strDest = NULL, bool fOneShot = false);
+
