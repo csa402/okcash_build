@@ -23,6 +23,9 @@ PatchCheckPoints=YES #speedup init (start check database at last checkpoint)
 #Optimiser Raspberry (give watchdog function and autostart okcash, speedup a little the raspberry)
 Raspi_optimize=YES
 
+#Website frontend (give a small web page to check if everything is ok)
+Website=NO
+
 echo -e "\n\e[97mOkcash headless builder version $Version\e[0m"
 echo -e "wareck@gmail.com"
 echo -e "\nConfiguration"
@@ -32,6 +35,8 @@ echo -e "Delete tarballs after build   : $CleanAfterInstall"
 echo -e "Delete build directory        : $DelFolders"
 echo -e "Patching Checkpoints.cpp      : $PatchCheckPoints"
 echo -e "Raspberry Optimisation        : $Raspi_optimize"
+echo -e "Website Frontend              : $Website"
+
 sleep 5
 
 
@@ -208,8 +213,9 @@ rm openssl-1.0.2g.tar.xz ||true
 rm miniupnpc-2.0.20170509.tar.xz || true
 rm db-4.8.30.NC.tar.xz || true
 fi
-if [ $DelFolders="YES" ]
+if [ $DelFolders = "YES" ]
 then
+echo -e "\n\e[95mCleaning folders:\e[0m"
 echo -e "Remove openssl-1.0.2g"
 sudo rm -r -f openssl-1.0.2g  || true
 echo -e "Remove miniupnpc-2.0.20170509"
@@ -220,11 +226,29 @@ echo -e "Remove boost_1_58_0"
 sudo rm -r -f boost_1_58_0 || true
 echo -e "Remove Okcash Folder"
 sudo rm -r -f okcash ||true
-rm .pass1 || true
+if [ -f .pass1 ];then rm .pass1;fi
 fi
 
 echo "Done !!!"
 
+if [ $Website = "YES" ]
+then
+echo -e "\n\e[95mWebsite Frontend installation:\e[0m"
+sudo apt-get install apache2 php5 php5-xmlrpc curl php5-curl
+cd /var/www/
+if ! [ -d /var/www/html ]
+then
+sudo bash -c 'git clone https://github.com/csa402/okcash_nodestatus.git html'
+sudo bash -c 'sudo cp /var/www/html/php/config.sample.php /var/www/html/php/config.php'
+fi
+cd /home/pi
+if  ! grep "curl -Ssk http://127.0.0.1/stats.php" /etc/crontab >/dev/null
+then
+sudo bash -c 'echo "*/5 *  *   *   *  curl -Ssk http://127.0.0.1/stats.php > /dev/null" >>/etc/crontab | sudo -s'
+sudo bash -c 'echo "*/5 *  *   *   *  curl -Ssk http://127.0.0.1/peercount.php > /dev/null" >>/etc/crontab | sudo -s'
+fi
+echo -e "Done"
+fi
 
 if [ $Raspi_optimize = "YES" ]
 then
@@ -240,7 +264,7 @@ if ! [ -f /home/pi/watchdog.sh ]
 then
 cat <<'EOF'>> /home/pi/watchdog.sh
 #!/bin/bash
-if ps -ef | grep -v grep | grep okcashd
+if ps -ef | grep -v grep | grep okcashd >/dev/null
 then
 exit 0
 else
@@ -264,7 +288,7 @@ fi
 echo -e "Done !"
 
 echo -e "\n\e[97mWatchdog batch & crontab :\e[0m"
-if  ! grep "/home/pi/watchdog.sh" /etc/crontab
+if  ! grep "/home/pi/watchdog.sh" /etc/crontab >/dev/null
 then
 sudo bash -c 'echo "#okcash watchdog" >>/etc/crontab | sudo -s'
 sudo bash -c 'echo "*/5    * * * * pi   /home/pi/watchdog.sh" >>/etc/crontab'
@@ -273,7 +297,7 @@ echo "Done !"
 
 
 echo -e "\n\e[97mrc.local batch:\e[0m"
-if ! grep "su - pi -c 'okcashd --printtoconsole'" /etc/rc.local
+if ! grep "su - pi -c 'okcashd --printtoconsole'" /etc/rc.local >/dev/null
 then
 sudo bash -c 'sed -i -e "s/exit 0//g" /etc/rc.local'
 sudo bash -c 'echo "su - pi -c \"okcashd --printtoconsole\"" >> /etc/rc.local'
@@ -289,13 +313,17 @@ sudo dphys-swapfile swapon
 echo -e "Done !"
 
 echo -e "\n\e[95mEnable Memory split :\e[0m"
-if ! grep "gpu_mem=16" /boot/config.txt
+if ! grep "gpu_mem=16" /boot/config.txt >/dev/null
 then
 sudo bash -c 'echo "gpu_mem=16" >>/boot/config.txt'
 fi
 echo -e "Done !"
 
-echo -e "\n\e[92mRaspberry optimized, need to reboot .\e[0m"
+echo -e "\n\e[92mRaspberry optimized : need to reboot .\e[0m"
+fi
+if [ $Website = "YES" ]
+then
+echo -e "\n\e[92mDon't forget to edit your /var/www/html/php/config.php file ...\e[0m"
 fi
 
 echo -e "\n\e[97mBuild is finished !!!\e[0m"
