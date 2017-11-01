@@ -2,7 +2,7 @@
 #Okcash headless 4.0.0.4g RPI Working (sync enable, staking enable)
 #Best results found was : Boost 1.58 / Openssl 1.0.2g / DB 4.8-30 / OkCash 4.0.0.4g
 set -e
-Version=1.4g
+Version=1.5g
 
 ################
 ##Configuration#
